@@ -6,22 +6,10 @@ public class MovieRowModel {
     private String mImg;
     private String mID;
 
-    MovieRowModel(String mName, String mImg, String mID){
+    public MovieRowModel(String mName, String mImg, String mID){
         this.mName = mName;
         this.mImg = mImg;
         this.mID = mID;
-    }
-
-    public void setmImg(String mImg) {
-        this.mImg = mImg;
-    }
-
-    public void setmID(String mID) {
-        this.mID = mID;
-    }
-
-    public void setmName(String mName) {
-        this.mName = mName;
     }
 
     public String getmName() {

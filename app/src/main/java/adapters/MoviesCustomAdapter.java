@@ -2,6 +2,7 @@ package adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,13 +41,15 @@ public class MoviesCustomAdapter extends RecyclerView.Adapter<MoviesCustomAdapte
 
             // Get views data
             String imageUrl = currentMovieItem.getmImg();
+            Log.e("MyAdapter:imageURL:", imageUrl);
             String movieName = currentMovieItem.getmName();
             String movieID = currentMovieItem.getmID();
 
             // Set the views
             holder.m_NameTextView.setText(movieName);
             holder.m_idTextView.setText(movieID);
-            Picasso.get().load(imageUrl).fit().centerInside().into(holder.m_logoImageView);
+  //        Picasso.get().load(imageUrl).fit().centerInside().into(holder.m_logoImageView);
+            Picasso.get().load(imageUrl).into(holder.m_logoImageView);
 
         }
 
@@ -65,9 +68,9 @@ public class MoviesCustomAdapter extends RecyclerView.Adapter<MoviesCustomAdapte
 
             public MyViewHolder(View itemView){
                 super(itemView);
-                m_NameTextView = (TextView) itemView.findViewById(R.id.movieTitle);
-                m_logoImageView = (ImageView) itemView.findViewById(R.id.movieImg);
-                m_idTextView = (TextView) itemView.findViewById(R.id.movieID);
+                m_NameTextView = itemView.findViewById(R.id.movieTitle);
+                m_logoImageView = itemView.findViewById(R.id.movieImg);
+                m_idTextView =  itemView.findViewById(R.id.movieID);
 
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -79,12 +82,5 @@ public class MoviesCustomAdapter extends RecyclerView.Adapter<MoviesCustomAdapte
             }
 
         }
-
-
-
-
-
-
-
 
 }

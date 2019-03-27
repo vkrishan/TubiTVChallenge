@@ -19,37 +19,35 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import adapters.MoviesCustomAdapter;
+import models.MovieRowModel;
 import utils.MoviesQueryUtils;
 
 public class MovieListActivity extends AppCompatActivity {
 
     private String TAG = MovieListActivity.class.getName();
     private ProgressDialog pDialog;
-    private RecyclerView recyclerView;
-    RecyclerView.Adapter mAdapter;
+    private RecyclerView mRecyclerView;
+    private MoviesCustomAdapter mCustomAdapter;
     RecyclerView.LayoutManager layoutManager;
 
     // URL to get contacts JSON
     private String url_moviesList = "https://us-central1-modern-venture-600.cloudfunctions.net/api/movies";
-
-    ArrayList<HashMap<String, String>> moviesList;
+    private ArrayList<MovieRowModel> mMoviesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list);
 
-        moviesList = new ArrayList<>();
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        recyclerView.setHasFixedSize(true);
-
+        // Setup RecyclerView
+        mRecyclerView = findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setLayoutManager(layoutManager);
 
+        mMoviesList = new ArrayList<>();
 
         new GetMovies().execute();
-
-
     }
 
 
@@ -86,13 +84,9 @@ public class MovieListActivity extends AppCompatActivity {
                         String m_Image = mObject.getString("image");
                         String m_ID = mObject.getString("id");
 
-                        HashMap<String, String> moviesMap = new HashMap<>();
+                        // ArrayList of Movie model
+                        mMoviesList.add(new MovieRowModel(m_Name, m_Image, m_ID));
 
-                        moviesMap.put("m_Name", m_Name);
-                        moviesMap.put("m_Image", m_Image);
-                        moviesMap.put("m_ID", m_ID);
-
-                        moviesList.add(moviesMap);
                     }
 
                 }catch (final JSONException e) {
@@ -136,13 +130,11 @@ public class MovieListActivity extends AppCompatActivity {
                 pDialog.dismiss();
 
             // Update the recyclerView with movies list data
-         //   mAdapter = new MoviesCustomAdapter(this, moviesList);
-
+            mCustomAdapter = new MoviesCustomAdapter(MovieListActivity.this, mMoviesList);
+            mRecyclerView.setAdapter(mCustomAdapter);
 
         }
 
-
     }
-
 
 }
