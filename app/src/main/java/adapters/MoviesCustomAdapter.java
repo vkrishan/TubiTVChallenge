@@ -42,6 +42,7 @@ public class MoviesCustomAdapter extends RecyclerView.Adapter<MoviesCustomAdapte
             // Get views data
             String imageUrl = currentMovieItem.getmImg();
             Log.e("MyAdapter:imageURL:", imageUrl);
+            Log.e("MyAdapter:POSITION:",""+position);
             String movieName = currentMovieItem.getmName();
             String movieID = currentMovieItem.getmID();
 
